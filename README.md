@@ -4,7 +4,7 @@
 <br/>
 
 ### Contenido
-* [Lineamientos](./docs/tech_specs.png)
+* [Lineamientos](./docs/tech_specs.md)
 * [Endpoints](./docs/endpoints.md)
 * [Diagrama de clases](./docs/classes.png)
 * [Esquema DB](./docs/db.png)
