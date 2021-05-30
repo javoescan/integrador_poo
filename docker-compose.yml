@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: app
+    environment:
+      - SERVER_PORT=8081
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./src:/app/src
+    links:
+      - redis
+
+  db:
+    image: mysql:5.7
+    container_name: db
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: redeems
+      MYSQL_USER: redeems
+      MYSQL_PASSWORD: redeems
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+
+volumes:
+  db_data: {}
