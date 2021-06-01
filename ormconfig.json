@@ -1,0 +1,16 @@
+{
+  "type": "mysql",
+  "host": "db",
+  "port": "3306",
+  "username": "redeems",
+  "password": "redeems",
+  "database": "redeems",
+  "synchronize": false,
+  "dropSchema": false,
+  "logging": true,
+  "entities": ["src/business/**/*.entity.ts"],
+  "migrations": ["src/db/migrations/*.ts"],
+  "cli": {
+    "migrationsDir": "src/db/migrations"
+  }
+}

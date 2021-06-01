@@ -11,7 +11,7 @@ services:
     volumes:
       - ./src:/app/src
     links:
-      - redis
+      - db
 
   db:
     image: mysql:5.7
@@ -24,10 +24,6 @@ services:
       MYSQL_DATABASE: redeems
       MYSQL_USER: redeems
       MYSQL_PASSWORD: redeems
-
-  redis:
-    image: redis:alpine
-    container_name: redis
 
 volumes:
   db_data: {}
