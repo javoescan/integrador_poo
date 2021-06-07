@@ -3,6 +3,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AdminAuthGuard } from './admin.auth.guard';
+import { BasicAuthGuard } from './basic.auth.guard';
 import { AuthService } from './auth.service';
 
 @Global()
@@ -14,13 +16,13 @@ import { AuthService } from './auth.service';
 			useFactory: async (configService: ConfigService) => ({
 				secret: configService.get('JWT_SECRET'),
 				signOptions: {
-					expiresIn: '3h',
+					expiresIn: configService.get('JWT_EXPIRATION'),
 				},
 			}),
 			inject: [ConfigService],
 		}),
 	],
-	providers: [JwtStrategy, AuthService],
-	exports: [AuthService],
+	providers: [JwtStrategy, AdminAuthGuard, BasicAuthGuard, AuthService],
+	exports: [AdminAuthGuard, BasicAuthGuard, AuthService],
 })
 export class AuthModule {}

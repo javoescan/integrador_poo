@@ -4,7 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AuthService } from 'business/auth/auth.service';
 import { AuthServiceMock } from 'business/auth/mocks/auth.service.mock';
-import { userMock, userJwtMock } from '../mocks/user.mocks';
+import { userMock, loginMock } from '../mocks/user.mocks';
 import { UsersRepositoryMock } from '../mocks/users.repository.mock';
 import { User } from '../users.entity';
 import { UsersService } from '../users.service';
@@ -41,7 +41,7 @@ describe('UsersService', () => {
 	describe('login', () => {
 		it('should return the mocked jwt', async () => {
 			jest.spyOn(bcrypt, 'compare').mockImplementationOnce(() => Promise.resolve(true));
-			expect(await usersService.login(userMock.email, userMock.password)).toEqual(userJwtMock);
+			expect(await usersService.login(userMock.email, userMock.password)).toEqual(loginMock);
 		});
 		it('should throw an error because the user does not exist', async () => {
 			jest.spyOn(usersService['usersRepository'], 'createQueryBuilder').mockImplementationOnce((): any => ({

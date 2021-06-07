@@ -1,5 +1,7 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { UserRoles } from './enums/roles.enum';
+import { v4 as uuid } from 'uuid';
 
 @Entity({ name: 'users' })
 export class User {
@@ -14,6 +16,9 @@ export class User {
 
 	@Column('varchar', { length: 100 })
 	email: string;
+
+	@Column()
+	document: string;
 
 	@Column({ select: false })
 	password: string;
@@ -33,4 +38,10 @@ export class User {
 
 	@DeleteDateColumn({ type: 'timestamp', name: 'deleted_at' })
   deletedAt?: Date;
+
+	@BeforeInsert()
+	async beforeInsert(): Promise<void> {
+		this.id = uuid();
+		this.password = await bcrypt.hash(this.password, 10);
+	}
 }

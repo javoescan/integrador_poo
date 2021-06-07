@@ -1,4 +1,3 @@
-import { CacheModule } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { userMock, userJwtMock } from '../mocks/user.mocks';
 import { UsersServiceMock } from '../mocks/users.service.mock';
@@ -10,7 +9,6 @@ describe('UsersController', () => {
 
 	beforeEach(async () => {
 		const app: TestingModule = await Test.createTestingModule({
-			imports: [CacheModule.register({})],
 			controllers: [UsersController],
 			providers: [UsersService],
 		})

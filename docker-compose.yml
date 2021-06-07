@@ -24,6 +24,16 @@ services:
       MYSQL_DATABASE: redeems
       MYSQL_USER: redeems
       MYSQL_PASSWORD: redeems
+  
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - 8082:80
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root 
 
 volumes:
   db_data: {}
