@@ -51,6 +51,7 @@ export class UsersService {
     entity.lastName = user.lastName;
     entity.role = user.role;
     entity.document = user.document;
+    entity.credits = user.credits;
     return this.usersRepository.save(entity);
   }
   

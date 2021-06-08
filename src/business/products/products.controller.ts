@@ -22,13 +22,13 @@ export class ProductsController {
 
   @Post()
   @UseGuards(AdminAuthGuard)
-  create(@Body('product') product: Product): Promise<Product> {
+  create(@Body() product: Product): Promise<Product> {
     return this.productsService.create(product);
   }
 
   @Put(':id')
   @UseGuards(AdminAuthGuard)
-  update(@Body('product') product: Product): Promise<Product> {
+  update(@Body() product: Product): Promise<Product> {
     return this.productsService.update(product);
   }
 

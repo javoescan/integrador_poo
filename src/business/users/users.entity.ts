@@ -1,7 +1,8 @@
 import * as bcrypt from 'bcrypt';
-import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { UserRoles } from './enums/roles.enum';
 import { v4 as uuid } from 'uuid';
+import { Redeem } from 'business/redeems/redeems.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -23,12 +24,18 @@ export class User {
 	@Column({ select: false })
 	password: string;
 
+	@Column()
+	credits: number;
+
 	@Column({
 		type: 'enum',
 		enum: UserRoles,
 		default: UserRoles.CUSTOMER,
 	})
 	role: UserRoles;
+
+	@OneToMany(() => Redeem, redeem => redeem.user)
+  redeems: Redeem[];
 
 	@CreateDateColumn({ type: 'timestamp', name: 'created_at' })
 	createdAt: Date;

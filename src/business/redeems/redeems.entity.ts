@@ -1,22 +1,21 @@
 import { RedeemProduct } from 'business/redeem-products/redeem-products.entity';
-import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { User } from 'business/users/users.entity';
+import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
-@Entity({ name: 'products' })
-export class Product {
+@Entity({ name: 'redeems' })
+export class Redeem {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@Column()
-	name: string;
+	@Column({ type: 'timestamp' })
+	date: Date;
 
-	@Column()
-	price: number;
+	@ManyToOne(() => User, user => user.redeems)
+	@JoinColumn({ name: 'user_id' })
+  user: User;
 
-	@Column()
-	stock: number;
-
-	@OneToMany(() => RedeemProduct, redeemProduct => redeemProduct.product)
+	@OneToMany(() => RedeemProduct, redeemProduct => redeemProduct.redeem)
   redeemProducts: RedeemProduct[];
 
 	@CreateDateColumn({ type: 'timestamp', name: 'created_at' })
