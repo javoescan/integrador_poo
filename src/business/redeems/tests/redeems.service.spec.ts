@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AuthService } from 'business/auth/auth.service';
 import { AuthServiceMock } from 'business/auth/mocks/auth.service.mock';
+import { userMock } from 'business/users/mocks/user.mocks';
 import { redeemMock } from '../mocks/redeems.mocks';
 import { RedeemsRepositoryMock } from '../mocks/redeems.repository.mock';
 import { Redeem } from '../redeems.entity';
@@ -33,7 +34,7 @@ describe('RedeemsService', () => {
 
 	describe('create', () => {
 		it('should return the created redeem', async () => {
-			expect(await redeemsService.create(redeemMock)).toEqual(redeemMock);
+			expect(await redeemsService.create(redeemMock, userMock)).toEqual(redeemMock);
 		});
 	});
 });

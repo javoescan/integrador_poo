@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { BasicAuthGuard } from 'business/auth/basic.auth.guard';
+import { RedeemCreate } from './interfaces/redeem-create.interface';
 import { Redeem } from './redeems.entity';
 import { RedeemsService } from './redeems.service';
 
@@ -15,7 +16,7 @@ export class RedeemsController {
 
   @Post()
   @UseGuards(BasicAuthGuard)
-  create(@Body() redeem: Redeem): Promise<Redeem> {
-    return this.redeemsService.create(redeem);
+  create(@Body() redeem: RedeemCreate, @Req() req): Promise<Redeem> {
+    return this.redeemsService.create(redeem, req.user);
   }
 }
