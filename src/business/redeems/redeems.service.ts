@@ -32,15 +32,19 @@ export class RedeemsService {
     }
   }
 
-  async getAllByUser(userId: string, limit: number, page: number): Promise<Redeem[]> {
+  async getAllByUser(userId: string, limit: number, page: number): Promise<RedeemsResponse> {
     const user = new User();
     user.id = userId;
-    return this.redeemsRepository.find({
+    const [redeems, total] = await this.redeemsRepository.findAndCount({
       where: { user },
       relations: ['user'],
       take: limit || 10,
       skip: page || 0,
     });
+    return {
+      total,
+      redeems,
+    }
   }
 
   async create(reqRedeem: RedeemCreate, reqUser: User): Promise<Redeem> {

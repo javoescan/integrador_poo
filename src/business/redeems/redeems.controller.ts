@@ -21,7 +21,7 @@ export class RedeemsController {
   @Get(':id')
   @UseGuards(BasicAuthGuard)
   @UseInterceptors(TransformInterceptor)
-  getAllByUser(@Param('id') id, @Query('limit') limit, @Query('page') page): Promise<Redeem[]> {
+  getAllByUser(@Param('id') id, @Query('limit') limit, @Query('page') page): Promise<RedeemsResponse> {
     return this.redeemsService.getAllByUser(id, limit, page);
   }
 
