@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Query, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AdminAuthGuard } from 'business/auth/admin.auth.guard';
 import { BasicAuthGuard } from 'business/auth/basic.auth.guard';
 import { TransformInterceptor } from 'interceptors/transform.interceptor';
@@ -21,7 +21,10 @@ export class RedeemsController {
   @Get(':id')
   @UseGuards(BasicAuthGuard)
   @UseInterceptors(TransformInterceptor)
-  getAllByUser(@Param('id') id, @Query('limit') limit, @Query('page') page): Promise<RedeemsResponse> {
+  getAllByUser(@Param('id') id, @Query('limit') limit, @Query('page') page, @Req() req): Promise<RedeemsResponse> {
+    if (req.user.id !== id) {
+      throw new HttpException('User does not match with requested', HttpStatus.UNAUTHORIZED);
+    }
     return this.redeemsService.getAllByUser(id, limit, page);
   }
 
