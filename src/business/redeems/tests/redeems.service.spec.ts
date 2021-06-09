@@ -1,10 +1,13 @@
-import { HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { AuthService } from 'business/auth/auth.service';
-import { AuthServiceMock } from 'business/auth/mocks/auth.service.mock';
+import { ProductsServiceMock } from 'business/products/mocks/products.service.mock';
+import { ProductsService } from 'business/products/products.service';
+import { RedeemProductsServiceMock } from 'business/redeem-products/mocks/redeem-products.service.mock';
+import { RedeemProductsService } from 'business/redeem-products/redeem-products.service';
 import { userMock } from 'business/users/mocks/user.mocks';
-import { redeemMock } from '../mocks/redeems.mocks';
+import { UsersServiceMock } from 'business/users/mocks/users.service.mock';
+import { UsersService } from 'business/users/users.service';
+import { redeemCreateMock, redeemMock } from '../mocks/redeems.mocks';
 import { RedeemsRepositoryMock } from '../mocks/redeems.repository.mock';
 import { Redeem } from '../redeems.entity';
 import { RedeemsService } from '../redeems.service';
@@ -14,13 +17,17 @@ describe('RedeemsService', () => {
 
 	beforeEach(async () => {
 		const app: TestingModule = await Test.createTestingModule({
-			providers: [RedeemsService, AuthService, {
+			providers: [RedeemsService, {
 				provide: getRepositoryToken(Redeem),
 				useClass: RedeemsRepositoryMock,
-			}],
+			}, ProductsService, UsersService, RedeemProductsService],
 		})
-			.overrideProvider(AuthService)
-			.useClass(AuthServiceMock)
+			.overrideProvider(ProductsService)
+			.useClass(ProductsServiceMock)
+			.overrideProvider(UsersService)
+			.useClass(UsersServiceMock)
+			.overrideProvider(RedeemProductsService)
+			.useClass(RedeemProductsServiceMock)
 			.compile();
 
       redeemsService = app.get<RedeemsService>(RedeemsService);
@@ -34,7 +41,7 @@ describe('RedeemsService', () => {
 
 	describe('create', () => {
 		it('should return the created redeem', async () => {
-			expect(await redeemsService.create(redeemMock, userMock)).toEqual(redeemMock);
+			expect(await redeemsService.create(redeemCreateMock, userMock)).toEqual(redeemMock);
 		});
 	});
 });

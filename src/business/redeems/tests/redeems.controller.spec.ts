@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { redeemMock } from '../mocks/redeems.mocks';
+import { userMock } from 'business/users/mocks/user.mocks';
+import { redeemCreateMock, redeemMock } from '../mocks/redeems.mocks';
 import { RedeemsServiceMock } from '../mocks/redeems.service.mock';
 import { RedeemsController } from '../redeems.controller';
 import { RedeemsService } from '../redeems.service';
@@ -27,7 +28,7 @@ describe('RedeemsController', () => {
 
 	describe('create', () => {
 		it('should return the created redeem', async () => {
-			expect(await redeemsController.create(redeemMock)).toEqual(redeemMock);
+			expect(await redeemsController.create(redeemCreateMock, userMock)).toEqual(redeemMock);
 		});
 	});
 });
