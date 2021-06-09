@@ -3,6 +3,7 @@ import { AdminAuthGuard } from 'business/auth/admin.auth.guard';
 import { BasicAuthGuard } from 'business/auth/basic.auth.guard';
 import { TransformInterceptor } from 'interceptors/transform.interceptor';
 import { RedeemCreate } from './interfaces/redeem-create.interface';
+import { RedeemsResponse } from './interfaces/redeem-response.interface';
 import { Redeem } from './redeems.entity';
 import { RedeemsService } from './redeems.service';
 
@@ -13,7 +14,7 @@ export class RedeemsController {
   @Get()
   @UseGuards(AdminAuthGuard)
   @UseInterceptors(TransformInterceptor)
-  getAll(@Query('limit') limit, @Query('page') page): Promise<Redeem[]> {
+  getAll(@Query('limit') limit, @Query('page') page): Promise<RedeemsResponse> {
     return this.redeemsService.getAll(limit, page);
   }
 

@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, UseI
 import { AdminAuthGuard } from 'business/auth/admin.auth.guard';
 import { BasicAuthGuard } from 'business/auth/basic.auth.guard';
 import { TransformInterceptor } from 'interceptors/transform.interceptor';
+import { ProductsResponse } from './interfaces/products-response.interface';
 import { Product } from './products.entity';
 import { ProductsService } from './products.service';
 
@@ -12,7 +13,7 @@ export class ProductsController {
   @Get()
   @UseInterceptors(TransformInterceptor)
   @UseGuards(BasicAuthGuard)
-  getAll(@Query('limit') limit, @Query('page') page): Promise<Product[]> {
+  getAll(@Query('limit') limit, @Query('page') page): Promise<ProductsResponse> {
     return this.productsService.getAll(limit, page);
   }
 

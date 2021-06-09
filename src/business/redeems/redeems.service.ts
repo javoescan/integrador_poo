@@ -8,6 +8,7 @@ import { User } from 'business/users/users.entity';
 import { UsersService } from 'business/users/users.service';
 import { Repository } from 'typeorm';
 import { RedeemCreate } from './interfaces/redeem-create.interface';
+import { RedeemsResponse } from './interfaces/redeem-response.interface';
 import { Redeem } from './redeems.entity';
 
 @Injectable()
@@ -19,12 +20,16 @@ export class RedeemsService {
     private readonly redeemProductsService: RedeemProductsService,
   ) {}
 
-  async getAll(limit: number, page: number): Promise<Redeem[]> {
-    return this.redeemsRepository.find({
+  async getAll(limit: number, page: number): Promise<RedeemsResponse> {
+    const [redeems, total] = await this.redeemsRepository.findAndCount({
       relations: ['user'],
       take: limit || 10,
       skip: page || 0,
     });
+    return {
+      total,
+      redeems,
+    }
   }
 
   async getAllByUser(userId: string, limit: number, page: number): Promise<Redeem[]> {

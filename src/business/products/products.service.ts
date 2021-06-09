@@ -1,17 +1,22 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ProductsResponse } from './interfaces/products-response.interface';
 import { Product } from './products.entity';
 
 @Injectable()
 export class ProductsService {
   constructor(@InjectRepository(Product) private productsRepository: Repository<Product>) {}
 
-  async getAll(limit, page): Promise<Product[]> {
-    return this.productsRepository.find({
+  async getAll(limit, page): Promise<ProductsResponse> {
+    const [products, total] = await this.productsRepository.findAndCount({
       take: limit || 10,
       skip: page || 0,
     });
+    return {
+      total,
+      products,
+    }
   }
 
   async get(id: string): Promise<Product> {
