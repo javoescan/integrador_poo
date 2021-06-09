@@ -12,11 +12,7 @@ export class ProductsService {
   }
 
   async get(id: string): Promise<Product> {
-    const sale = await this.productsRepository.findOne({ id });
-    if (!sale) {
-			throw new HttpException('Not found', HttpStatus.NOT_FOUND);
-    }
-    return sale;
+    return this.productsRepository.findOne({ id });
   }
 
   async create(product: Product): Promise<Product> {

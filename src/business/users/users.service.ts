@@ -62,7 +62,9 @@ export class UsersService {
         ...existingUser,
         ...user,
       };
-      updatedUser.password =  await bcrypt.hash(updatedUser.password, 10);
+      if (updatedUser.password) {
+        updatedUser.password =  await bcrypt.hash(updatedUser.password, 10);
+      }
       return this.usersRepository.save(updatedUser);
     } catch (e) {
       throw new HttpException(e.message, e.status);

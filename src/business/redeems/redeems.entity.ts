@@ -11,11 +11,15 @@ export class Redeem {
 	@Column({ type: 'timestamp' })
 	date: Date;
 
-	@ManyToOne(() => User, user => user.redeems)
+	@ManyToOne(() => User, user => user.redeems, {
+		eager: true
+	})
 	@JoinColumn({ name: 'user_id' })
   user: User;
 
-	@OneToMany(() => RedeemProduct, redeemProduct => redeemProduct.redeem)
+	@OneToMany(() => RedeemProduct, redeemProduct => redeemProduct.redeem, {
+		eager: true
+	})
   redeemProducts: RedeemProduct[];
 
 	@CreateDateColumn({ type: 'timestamp', name: 'created_at' })

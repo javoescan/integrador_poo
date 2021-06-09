@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AdminAuthGuard } from 'business/auth/admin.auth.guard';
 import { BasicAuthGuard } from 'business/auth/basic.auth.guard';
+import { TransformInterceptor } from 'interceptors/transform.interceptor';
 import { Product } from './products.entity';
 import { ProductsService } from './products.service';
 
@@ -9,30 +10,35 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get()
+  @UseInterceptors(TransformInterceptor)
   @UseGuards(BasicAuthGuard)
   getAll(): Promise<Product[]> {
     return this.productsService.getAll();
   }
 
   @Get(':id')
+  @UseInterceptors(TransformInterceptor)
   @UseGuards(BasicAuthGuard)
   get(@Param('id') id: string): Promise<Product> {
     return this.productsService.get(id);
   }
 
   @Post()
+  @UseInterceptors(TransformInterceptor)
   @UseGuards(AdminAuthGuard)
   create(@Body() product: Product): Promise<Product> {
     return this.productsService.create(product);
   }
 
   @Put(':id')
+  @UseInterceptors(TransformInterceptor)
   @UseGuards(AdminAuthGuard)
   update(@Body() product: Product): Promise<Product> {
     return this.productsService.update(product);
   }
 
   @Delete(':id')
+  @UseInterceptors(TransformInterceptor)
   @UseGuards(AdminAuthGuard)
   delete(@Param('id') id: string): Promise<string> {
     return this.productsService.delete(id);

@@ -11,8 +11,7 @@ export class RedeemProductsService {
     return this.redeemProductsRepository.find();
   }
 
-  async create(redeem: RedeemProduct): Promise<RedeemProduct> {
-    const entity = new RedeemProduct();
-    return this.redeemProductsRepository.save(entity);
+  async create(redeemProduct: RedeemProduct): Promise<RedeemProduct> {
+    return this.redeemProductsRepository.save(redeemProduct);
   }
 }
