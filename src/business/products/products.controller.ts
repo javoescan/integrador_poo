@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AdminAuthGuard } from 'business/auth/admin.auth.guard';
 import { BasicAuthGuard } from 'business/auth/basic.auth.guard';
 import { TransformInterceptor } from 'interceptors/transform.interceptor';
@@ -12,8 +12,8 @@ export class ProductsController {
   @Get()
   @UseInterceptors(TransformInterceptor)
   @UseGuards(BasicAuthGuard)
-  getAll(): Promise<Product[]> {
-    return this.productsService.getAll();
+  getAll(@Query('limit') limit, @Query('page') page): Promise<Product[]> {
+    return this.productsService.getAll(limit, page);
   }
 
   @Get(':id')

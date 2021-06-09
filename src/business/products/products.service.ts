@@ -7,8 +7,11 @@ import { Product } from './products.entity';
 export class ProductsService {
   constructor(@InjectRepository(Product) private productsRepository: Repository<Product>) {}
 
-  async getAll(): Promise<Product[]> {
-    return this.productsRepository.find();
+  async getAll(limit, page): Promise<Product[]> {
+    return this.productsRepository.find({
+      take: limit || 10,
+      skip: page || 0,
+    });
   }
 
   async get(id: string): Promise<Product> {
