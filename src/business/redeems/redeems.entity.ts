@@ -11,9 +11,7 @@ export class Redeem {
 	@Column({ type: 'timestamp' })
 	date: Date;
 
-	@ManyToOne(() => User, user => user.redeems, {
-		eager: true
-	})
+	@ManyToOne(() => User, user => user.redeems)
 	@JoinColumn({ name: 'user_id' })
   user: User;
 

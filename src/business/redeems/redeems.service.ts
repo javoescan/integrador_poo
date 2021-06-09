@@ -19,8 +19,23 @@ export class RedeemsService {
     private readonly redeemProductsService: RedeemProductsService,
   ) {}
 
-  async getAllByUser(): Promise<Redeem[]> {
-    return this.redeemsRepository.find();
+  async getAll(limit: number, page: number): Promise<Redeem[]> {
+    return this.redeemsRepository.find({
+      relations: ['user'],
+      take: limit || 10,
+      skip: page || 0,
+    });
+  }
+
+  async getAllByUser(userId: string, limit: number, page: number): Promise<Redeem[]> {
+    const user = new User();
+    user.id = userId;
+    return this.redeemsRepository.find({
+      where: { user },
+      relations: ['user'],
+      take: limit || 10,
+      skip: page || 0,
+    });
   }
 
   async create(reqRedeem: RedeemCreate, reqUser: User): Promise<Redeem> {

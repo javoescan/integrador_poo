@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import { AdminAuthGuard } from 'business/auth/admin.auth.guard';
 import { BasicAuthGuard } from 'business/auth/basic.auth.guard';
 import { TransformInterceptor } from 'interceptors/transform.interceptor';
 import { RedeemCreate } from './interfaces/redeem-create.interface';
@@ -10,10 +11,17 @@ export class RedeemsController {
   constructor(private readonly redeemsService: RedeemsService) {}
 
   @Get()
+  @UseGuards(AdminAuthGuard)
+  @UseInterceptors(TransformInterceptor)
+  getAll(@Query('limit') limit, @Query('page') page): Promise<Redeem[]> {
+    return this.redeemsService.getAll(limit, page);
+  }
+
+  @Get(':id')
   @UseGuards(BasicAuthGuard)
   @UseInterceptors(TransformInterceptor)
-  getAllByUser(): Promise<Redeem[]> {
-    return this.redeemsService.getAllByUser();
+  getAllByUser(@Param('id') id, @Query('limit') limit, @Query('page') page): Promise<Redeem[]> {
+    return this.redeemsService.getAllByUser(id, limit, page);
   }
 
   @Post()
