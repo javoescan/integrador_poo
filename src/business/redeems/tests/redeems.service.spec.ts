@@ -35,7 +35,16 @@ describe('RedeemsService', () => {
 
 	describe('getAll', () => {
 		it('should return the redeems collection', async () => {
-			expect(await redeemsService.getAllByUser()).toEqual([redeemMock]);
+			expect(await redeemsService.getAll(0, 0)).toEqual({
+				total: 1,
+				redeems: [redeemMock]
+			});
+		});
+	});
+
+	describe('getAll', () => {
+		it('should return the redeems collection filtered by user', async () => {
+			expect(await redeemsService.getAllByUser(userMock.id, 0, 0)).toEqual([redeemMock]);
 		});
 	});
 

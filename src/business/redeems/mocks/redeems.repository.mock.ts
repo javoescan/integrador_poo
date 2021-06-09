@@ -4,13 +4,9 @@ import { redeemMock } from './redeems.mocks';
 
 @Injectable()
 export class RedeemsRepositoryMock {
-	createQueryBuilder = () => ({
-		addSelect: () => ({
-			where: () => ({
-				getOne: () => redeemMock,
-			})
-		})
-	})
+	async findAndCount(): Promise<any> {
+		return [[redeemMock], 1];
+	}
 
 	async find(): Promise<Redeem[]> {
 		return [redeemMock];

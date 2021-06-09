@@ -4,6 +4,10 @@ import { redeemMock } from './redeems.mocks';
 
 @Injectable()
 export class RedeemsServiceMock {
+	async getAll(): Promise<Redeem[]> {
+		return [redeemMock];
+	}
+
 	async getAllByUser(id: string): Promise<Redeem[]> {
 		return [redeemMock];
 	}

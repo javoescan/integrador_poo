@@ -21,7 +21,7 @@ describe('ProductsController', () => {
 
 	describe('getAll', () => {
 		it('should return the products collection', async () => {
-			expect(await productsController.getAll()).toEqual([productMock]);
+			expect(await productsController.getAll(0, 0)).toEqual([productMock]);
 		});
 	});
 

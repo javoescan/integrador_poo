@@ -8,6 +8,10 @@ export class ProductsRepositoryMock {
 		return [productMock];
 	}
 
+	async findAndCount(): Promise<any> {
+		return [[productMock], 1];
+	}
+
 	async findOne(id: string): Promise<Product> {
 		return productMock;
 	}

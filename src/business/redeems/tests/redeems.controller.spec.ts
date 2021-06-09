@@ -22,7 +22,13 @@ describe('RedeemsController', () => {
 
 	describe('getAll', () => {
 		it('should return the redeems collection', async () => {
-			expect(await redeemsController.getAllByUser()).toEqual([redeemMock]);
+			expect(await redeemsController.getAll(0, 0)).toEqual([redeemMock]);
+		});
+	});
+
+	describe('getAllByUser', () => {
+		it('should return the redeems collection filtered by users', async () => {
+			expect(await redeemsController.getAllByUser(userMock.id, 0, 0)).toEqual([redeemMock]);
 		});
 	});
 

@@ -22,7 +22,10 @@ describe('ProductsService', () => {
 
 	describe('getAll', () => {
 		it('should return the products collection', async () => {
-			expect(await productsService.getAll()).toEqual([productMock]);
+			expect(await productsService.getAll(0, 0)).toEqual({
+				total: 1,
+				products: [productMock]
+			});
 		});
 	});
 
