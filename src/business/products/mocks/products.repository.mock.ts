@@ -4,10 +4,6 @@ import { productMock } from './products.mocks';
 
 @Injectable()
 export class ProductsRepositoryMock {
-	async find(): Promise<Product[]> {
-		return [productMock];
-	}
-
 	async findAndCount(): Promise<any> {
 		return [[productMock], 1];
 	}

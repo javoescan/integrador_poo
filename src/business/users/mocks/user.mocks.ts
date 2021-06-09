@@ -9,6 +9,7 @@ userMock.lastName = 'test_lastName';
 userMock.document = 'test_document';
 userMock.password = 'test_password';
 userMock.role = UserRoles.CUSTOMER;
+userMock.credits = 10;
 
 const userJwtMock = 'test_jwt';
 const loginMock = { token: userJwtMock };
