@@ -76,7 +76,7 @@ describe('RedeemsService', () => {
 			).rejects.toThrow(`Product ${redeemCreateMock.products[0].id} not found`);
 		});
 
-		it('should throw an exception because the product was not found', async () => {
+		it('should throw an exception because the product does not have stock left', async () => {
 			jest.spyOn(redeemsService['productsService'], 'get').mockImplementationOnce(async () => ({
 				...productMock,
 				stock: 0,
@@ -86,7 +86,7 @@ describe('RedeemsService', () => {
 			).rejects.toThrow(`Product ${redeemCreateMock.products[0].id} doesnt have stock left`);
 		});
 
-		it('should throw an exception because the product was not found', async () => {
+		it('should throw an exception because the user does not have sufficient credits', async () => {
 			jest.spyOn(redeemsService['productsService'], 'get').mockImplementationOnce(async () => ({
 				...productMock,
 				price: 4000,
